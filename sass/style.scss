@@ -1,0 +1,453 @@
+:root {
+  color-scheme: dark;
+  --bg: #2e3440;
+  --bg-muted: #3b4252;
+  --text: #eceff4;
+  --text-muted: #d8dee9;
+  --border: #4c566a;
+  --link: #88c0d0;
+  --accent: #81a1c1;
+  --code-bg: #3B4252;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  scroll-padding-top: 5rem;
+  color: var(--text);
+  font-size: 16px;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.7;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  width: min(100% - 2rem, 42rem);
+  margin: 0 auto;
+  padding: 2.5rem 0 4rem;
+}
+
+.site-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.site-header nav {
+  align-items: center;
+  display: flex;
+  gap: 1.75rem;
+  margin: 0 auto;
+  padding: 1rem 0;
+  position: relative;
+  width: min(100% - 2rem, 42rem);
+}
+
+.site-header a {
+  text-decoration: none;
+}
+
+.desktop-nav {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.site-title {
+  color: var(--text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-right: auto;
+}
+
+.site-search {
+  position: relative;
+}
+
+.site-search input {
+  background: var(--bg-muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.9rem;
+  padding: 0.35rem 0.6rem;
+  width: 11rem;
+}
+
+.site-search input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.search-results {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  list-style: none;
+  margin: 0.4rem 0 0;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 0.4rem;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: min(22rem, calc(100vw - 2rem));
+  z-index: 20;
+}
+
+.search-results a {
+  border-radius: 4px;
+  display: block;
+  padding: 0.5rem 0.6rem;
+  text-decoration: none;
+}
+
+.search-results a:hover,
+.search-results a:focus {
+  background: var(--bg-muted);
+}
+
+.search-results .search-snippet {
+  color: var(--text-muted);
+  display: block;
+  font-size: 0.85rem;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+.mobile-nav summary {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 2.25rem;
+  justify-content: center;
+  list-style: none;
+  width: 2.25rem;
+}
+
+.mobile-nav summary::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-nav summary span,
+.mobile-nav summary span::before,
+.mobile-nav summary span::after {
+  background: var(--link);
+  border-radius: 999px;
+  content: "";
+  display: block;
+  height: 2px;
+  width: 1.4rem;
+}
+
+.mobile-nav summary span {
+  position: relative;
+}
+
+.mobile-nav summary span::before,
+.mobile-nav summary span::after {
+  left: 0;
+  position: absolute;
+}
+
+.mobile-nav summary span::before {
+  top: -0.45rem;
+}
+
+.mobile-nav summary span::after {
+  top: 0.45rem;
+}
+
+.notfound {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 70vh;
+  text-align: center;
+}
+
+.mobile-nav-links {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  position: absolute;
+  right: 0;
+  top: calc(100% - 0.25rem);
+  width: 10rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text);
+  line-height: 1.25;
+  margin: 1.5em 0 0.5em;
+  position: relative;
+}
+
+.zola-anchor {
+  // Sit in the left margin, out of flow, so it never wraps to its own
+  // line and pushes the heading's underline down (see h3/h4 border-bottom).
+  position: absolute;
+  left: -1em;
+  opacity: 0;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+h1:hover .zola-anchor,
+h2:hover .zola-anchor,
+h3:hover .zola-anchor,
+h4:hover .zola-anchor,
+h5:hover .zola-anchor,
+h6:hover .zola-anchor,
+.zola-anchor:focus {
+  opacity: 1;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  border-bottom: 1px solid var(--border);
+  font-size: 1.25rem;
+  padding-bottom: 0.25em;
+}
+
+h4 {
+  border-bottom: 1px solid var(--border);
+  font-size: 1.1rem;
+  padding-bottom: 0.25em;
+}
+
+p,
+ul,
+ol,
+blockquote,
+pre,
+table {
+  margin: 1rem 0;
+}
+
+ul,
+ol {
+  padding-left: 1.5rem;
+}
+
+li {
+  line-height: 1.5;
+}
+
+li + li {
+  margin-top: 0.5rem;
+}
+
+li > ul,
+li > ol {
+  margin: 0.5rem 0 0;
+}
+
+// UI lists manage their own spacing; keep prose list margins out of them
+.tag-list li + li,
+.article-list li + li,
+.search-results li + li {
+  margin-top: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.8rem;
+}
+
+th {
+  background: var(--bg-muted);
+}
+
+.footnotes {
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 3rem;
+}
+
+.article-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.article-list time {
+  font-variant-numeric: tabular-nums;
+  margin-right: 0.5rem;
+}
+
+.article-meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 0.25rem;
+}
+
+.article-tags {
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
+}
+
+.article-tags a {
+  margin-right: 0.5rem;
+}
+
+.year-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+.tag-list a {
+  background: var(--code-bg);
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  text-decoration: none;
+}
+
+.tag-list a:hover {
+  background: var(--border);
+}
+
+.year-nav .current-year {
+  color: var(--text);
+  font-weight: 700;
+}
+
+a {
+  color: var(--link);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+strong {
+  color: #ffffff;
+}
+
+blockquote {
+  border-left: 0.25rem solid var(--accent);
+  color: var(--text-muted);
+  padding-left: 1rem;
+}
+
+code {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+  padding: 0.1em 0.35em;
+}
+
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+pre.giallo {
+  background: var(--code-bg) !important;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 34rem) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-nav {
+    display: block;
+  }
+
+  // Anchor links are a hover affordance; not useful on touch screens
+  .zola-anchor {
+    display: none;
+  }
+
+  .site-search {
+    flex: 1;
+    min-width: 0;
+    // Drop the positioning context so results anchor to the full-width nav
+    // instead of the narrow search box (prevents off-screen overflow)
+    position: static;
+  }
+
+  .site-search input {
+    width: 100%;
+  }
+}

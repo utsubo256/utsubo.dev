@@ -1,16 +1,34 @@
 # The URL the site will be built for
 base_url = "https://utsubo.dev"
 
+title = "utsubo.dev"
+
+# Default description for meta tags. Pages/sections can override with `description` in front matter.
+description = "技術の仕組みを、自分の手で確かめながら書き残すブログ"
+
+default_language = "ja"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = true
 
+taxonomies = [
+  { name = "tags" },
+]
+
+[search]
+index_format = "fuse_javascript"
+
+[slugify]
+anchors = "safe"
+
 [markdown]
+bottom_footnotes = true
 
 [markdown.highlighting]
-theme = "catppuccin-mocha"
+theme = "nord"
 
 [extra]
 # Put all your custom variables here

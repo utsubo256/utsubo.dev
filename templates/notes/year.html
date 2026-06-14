@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Notes</h1>
+
+  <nav class="year-nav">
+    {% set notes_root = get_section(path="notes/_index.md") %}
+    {% for sub in notes_root.subsections | sort | reverse %}
+      {% set year = get_section(path=sub) %}
+      {% if year.path == section.path %}
+        <span class="current-year">{{ year.title }}</span>
+      {% else %}
+        <a href="{{ year.permalink }}">{{ year.title }}</a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+
+  {{ section.content | safe }}
+
+  {% for page in section.pages %}
+    {% set day = page.date | date(format="%Y-%m-%d") %}
+    <article class="note">
+      <h2 id="{{ day }}">{{ day }}<a class="zola-anchor" href="#{{ day }}" aria-label="Anchor link for: {{ day }}">#</a></h2>
+      {{ page.content | safe }}
+    </article>
+  {% endfor %}
+{% endblock content %}

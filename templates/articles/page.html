@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <p class="article-meta">
+    <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+  </p>
+  {% if page.taxonomies.tags %}
+    <p class="article-tags">
+      {% for tag in page.taxonomies.tags %}
+        <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}">#{{ tag }}</a>
+      {% endfor %}
+    </p>
+  {% endif %}
+  <h1>{{ page.title }}</h1>
+  {{ page.content | safe }}
+{% endblock content %}
