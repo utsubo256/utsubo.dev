@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Articles</h1>
+
+  <nav class="year-nav">
+    {% set articles_root = get_section(path="articles/_index.md") %}
+    {% for sub in articles_root.subsections | sort | reverse %}
+      {% set year = get_section(path=sub) %}
+      {% if year.path == section.path %}
+        <span class="current-year">{{ year.title }}</span>
+      {% else %}
+        <a href="{{ year.permalink }}">{{ year.title }}</a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+
+  {{ section.content | safe }}
+
+  <ul class="article-list">
+    {% for page in section.pages %}
+      <li>
+        <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

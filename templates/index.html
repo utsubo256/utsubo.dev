@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {{ section.content | safe }}
+
+  {% set articles_root = get_section(path="articles/_index.md") %}
+  {% set_global recent_articles = [] %}
+  {% for sub in articles_root.subsections %}
+    {% set year = get_section(path=sub) %}
+    {% set_global recent_articles = recent_articles | concat(with=year.pages) %}
+  {% endfor %}
+  {% set recent_articles = recent_articles | sort(attribute="date") | reverse %}
+  <h2>Recent Articles</h2>
+  <ul class="article-list">
+    {% for page in recent_articles | slice(end=5) %}
+      <li>
+        <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% set latest_articles = get_section(path=articles_root.subsections | sort | last) %}
+  <p><a href="{{ latest_articles.permalink }}">→ Articles</a></p>
+
+  {% set notes_root = get_section(path="notes/_index.md") %}
+  {% set latest_notes = get_section(path=notes_root.subsections | sort | last) %}
+  <h2>Recent Notes</h2>
+  {% for page in latest_notes.pages | slice(end=3) %}
+    <article class="note">
+      <h3>{{ page.date | date(format="%Y-%m-%d") }}</h3>
+      {{ page.content | safe }}
+    </article>
+  {% endfor %}
+  <p><a href="{{ latest_notes.permalink }}">→ Notes</a></p>
+{% endblock content %}

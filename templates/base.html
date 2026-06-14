@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="{{ lang | default(value='ja') }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if section and section.title %}
+      {# Year sections (articles/2026 etc.) use the parent section name, not the year #}
+      {% if section.ancestors | length > 1 %}
+        {% set parent = get_section(path=section.ancestors | last) %}
+        {% set section_name = parent.title %}
+      {% else %}
+        {% set section_name = section.title %}
+      {% endif %}
+      {% set meta_title = section_name ~ " | " ~ config.title %}
+    {% elif page and page.title %}
+      {% set meta_title = page.title ~ " | " ~ config.title %}
+    {% elif term %}
+      {% set meta_title = "Tag: " ~ term.name ~ " | " ~ config.title %}
+    {% elif taxonomy %}
+      {% set meta_title = "Tags | " ~ config.title %}
+    {% else %}
+      {% set meta_title = config.title %}
+    {% endif %}
+    {% if page and page.description %}
+      {% set meta_description = page.description %}
+    {% elif section and section.description %}
+      {% set meta_description = section.description %}
+    {% else %}
+      {% set meta_description = config.description %}
+    {% endif %}
+    <title>{{ meta_title }}</title>
+    <meta name="description" content="{{ meta_description }}">
+    <link rel="canonical" href="{{ current_url | default(value=config.base_url) }}">
+    <meta property="og:site_name" content="{{ config.title }}">
+    <meta property="og:title" content="{{ meta_title }}">
+    <meta property="og:description" content="{{ meta_description }}">
+    <meta property="og:type" content="{% if page %}article{% else %}website{% endif %}">
+    <meta property="og:url" content="{{ current_url | default(value=config.base_url) }}">
+    <meta property="og:locale" content="ja_JP">
+    <!-- OGP image (1200x630 landscape) -->
+    <meta property="og:image" content="{{ get_url(path='og/og-image.png') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <!-- Twitter/X large image card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="{{ get_url(path='favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
+  </head>
+  <body>
+    {% set search_lang = lang | default(value="ja") %}
+    {% set notes_root = get_section(path="notes/_index.md") %}
+    {% set latest_notes_year = get_section(path=notes_root.subsections | sort | last) %}
+    {% set notes_url = latest_notes_year.permalink %}
+    {% set articles_root = get_section(path="articles/_index.md") %}
+    {% set latest_articles_year = get_section(path=articles_root.subsections | sort | last) %}
+    {% set articles_url = latest_articles_year.permalink %}
+    <header class="site-header">
+      <nav>
+        <a class="site-title" href="{{ config.base_url }}">{{ config.title }}</a>
+        <div class="site-search">
+          <input
+            type="search"
+            id="search-input"
+            placeholder="Search"
+            aria-label="Search"
+            autocomplete="off"
+            data-fuse-url="{{ get_url(path='js/fuse.min.js') }}"
+            data-index-url="{{ get_url(path='search_index.' ~ search_lang ~ '.js') }}"
+          >
+          <ul id="search-results" class="search-results" hidden></ul>
+        </div>
+        <div class="desktop-nav">
+          <a href="{{ articles_url }}">Articles</a>
+          <a href="{{ get_url(path='tags') }}">Tags</a>
+          <a href="{{ notes_url }}">Notes</a>
+          <a href="{{ get_url(path='@/about/index.md') }}">About</a>
+        </div>
+        <details class="mobile-nav">
+          <summary aria-label="Menu">
+            <span></span>
+          </summary>
+          <div class="mobile-nav-links">
+            <a href="{{ articles_url }}">Articles</a>
+            <a href="{{ get_url(path='tags') }}">Tags</a>
+            <a href="{{ notes_url }}">Notes</a>
+            <a href="{{ get_url(path='@/about/index.md') }}">About</a>
+          </div>
+        </details>
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock content %}
+    </main>
+    <script src="{{ get_url(path='js/search.js') }}" defer></script>
+    <script src="{{ get_url(path='js/menu.js') }}" defer></script>
+  </body>
+</html>

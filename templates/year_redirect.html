@@ -1,0 +1,14 @@
+{# Redirects the section root to its latest existing year subsection #}
+{% set latest = get_section(path=section.subsections | sort | last) %}
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ section.title }} | {{ config.title }}</title>
+    <link rel="canonical" href="{{ latest.permalink }}">
+    <meta http-equiv="refresh" content="0; url={{ latest.permalink }}">
+  </head>
+  <body>
+    <p><a href="{{ latest.permalink }}">{{ latest.permalink }}</a> へリダイレクトします。</p>
+  </body>
+</html>
