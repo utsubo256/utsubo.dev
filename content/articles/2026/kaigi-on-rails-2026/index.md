@@ -1,6 +1,6 @@
 +++
 title = "Kaigi on Rails 2026に参加しました！"
-date = 2026-10-18
+date = 2026-10-19
 
 [taxonomies]
 tags = ["Ruby", "Rails", "conference", "Kaigi on Rails"]
