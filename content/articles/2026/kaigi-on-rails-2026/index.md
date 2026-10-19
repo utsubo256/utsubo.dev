@@ -4,6 +4,9 @@ date = 2026-10-18
 
 [taxonomies]
 tags = ["Ruby", "Rails", "conference", "Kaigi on Rails"]
+
+[extra]
+og_image = "ogp.png"
 +++
 
 10/16(金)、10/17(土)に開催された[Kaigi on Rails 2026](https://kaigionrails.org/2026/)に参加しました！  
